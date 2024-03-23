@@ -12,7 +12,7 @@ import (
 
 var secretkey = os.Getenv("API_SECRET")
 
-func GenerateJWT(username string) (string, error) {
+func GenerateJWT(username, roleName string) (string, error) {
 	token_lifespan, err := strconv.Atoi(os.Getenv("TOKEN_HOUR_LIFESPAN"))
 
 	if err != nil {
@@ -21,6 +21,7 @@ func GenerateJWT(username string) (string, error) {
 	claims := jwt.MapClaims{}
 	claims["authorized"] = true
 	claims["username"] = username
+	claims["role"] = roleName
 	claims["exp"] = time.Now().Add(time.Hour * time.Duration(token_lifespan)).Unix()
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
@@ -53,8 +54,7 @@ func ExtractToken(c *gin.Context) string {
 	return ""
 }
 
-func ExtractTokenUsername(c *gin.Context) (uint, error) {
-
+func ExtractTokenCustomClaim(c *gin.Context, claimName string) (interface{}, error) {
 	tokenString := ExtractToken(c)
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
@@ -63,15 +63,11 @@ func ExtractTokenUsername(c *gin.Context) (uint, error) {
 		return []byte(secretkey), nil
 	})
 	if err != nil {
-		return 0, err
+		return nil, err
 	}
 	claims, ok := token.Claims.(jwt.MapClaims)
 	if ok && token.Valid {
-		uid, err := strconv.ParseUint(fmt.Sprintf("%.0f", claims["username"]), 10, 32)
-		if err != nil {
-			return 0, err
-		}
-		return uint(uid), nil
+		return claims[claimName], nil
 	}
-	return 0, nil
+	return nil, nil
 }

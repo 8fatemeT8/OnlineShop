@@ -39,5 +39,6 @@ func CreateTables() {
 		fmt.Println("We are connected to the database ", Dbdriver)
 	}
 
-	DB.AutoMigrate(&model.User{})
+	DB.AutoMigrate(&model.User{}, &model.Role{}, model.Basket{}, model.LineItem{}, model.Wallet{}, model.Transaction{},
+		model.Product{}, model.ProductDetail{}, model.Color{}, model.Size{}, model.Category{}, model.Comment{}, model.Favorite{})
 }

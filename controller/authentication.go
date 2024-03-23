@@ -14,8 +14,10 @@ func Register(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
+	var role model.Role
+	model2.DB.Model(model.Role{}).Where(model.Role{Name: "user"}).Take(&role)
 	user := initialUser(input)
+	user.Role = role
 
 	result := model2.DB.Model(&model.User{}).Create(&user)
 	err := result.Error
@@ -51,12 +53,17 @@ func Login(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"token": token})
 
 }
+
+func AdminStaff(c *gin.Context) {
+	c.JSON(200, "hiii adminssssss")
+}
 func initialUser(input model.Authentication) model.User {
 	u := model.User{}
 
 	u.Username = input.Username
 	u.Password = input.Password
-	u.Name = input.Name
+	u.FirstName = input.Firstname
+	u.LastName = input.LastName
 	u.Email = input.Email
 	return u
 }

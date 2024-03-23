@@ -21,3 +21,20 @@ func JwtAuthMiddleware() gin.HandlerFunc {
 		c.Next()
 	}
 }
+
+func HasAdminAccess(c *gin.Context) {
+	roleName, err := ExtractTokenCustomClaim(c, "role")
+	if err != nil {
+		c.String(http.StatusUnauthorized, "Unauthorized")
+		c.Abort()
+		return
+	}
+
+	if roleName != "admin" {
+		c.String(http.StatusUnauthorized, "Unauthorized")
+		c.Abort()
+		return
+	}
+
+	c.Next()
+}

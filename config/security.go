@@ -21,7 +21,7 @@ func LoginCheck(username string, password string) (string, error) {
 
 	u := model.User{}
 
-	err = model2.DB.Model(model.User{}).Where("username = ?", username).Take(&u).Error
+	err = model2.DB.Model(model.User{}).Preload("Role").Where("username = ?", username).Take(&u).Error
 
 	if err != nil {
 		return "", err
@@ -33,7 +33,7 @@ func LoginCheck(username string, password string) (string, error) {
 		return "", err
 	}
 
-	token, err := GenerateJWT(u.Username)
+	token, err := GenerateJWT(u.Username, u.Role.Name)
 
 	if err != nil {
 		return "", err
