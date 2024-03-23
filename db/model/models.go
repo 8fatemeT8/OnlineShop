@@ -1,8 +1,8 @@
 package model
 
 import (
-	"github.com/jinzhu/gorm"
 	"golang.org/x/crypto/bcrypt"
+	"gorm.io/gorm"
 	"html"
 	"strings"
 )
@@ -16,7 +16,7 @@ type User struct {
 	Role     string `json:"role"`
 }
 
-func (u *User) BeforeSave() error {
+func (u *User) BeforeCreate(tx *gorm.DB) error {
 
 	//turn password into hash
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.DefaultCost)
