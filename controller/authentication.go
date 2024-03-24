@@ -26,7 +26,9 @@ func Register(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": user})
+	token, err := config.LoginCheck(input.Username, input.Password)
+
+	c.JSON(http.StatusOK, gin.H{"token": token})
 }
 
 func Login(c *gin.Context) {
@@ -57,6 +59,7 @@ func Login(c *gin.Context) {
 func AdminStaff(c *gin.Context) {
 	c.JSON(200, "hiii adminssssss")
 }
+
 func initialUser(input model.Authentication) model.User {
 	u := model.User{}
 
