@@ -9,6 +9,7 @@ import (
 
 type User struct {
 	gorm.Model
+	Id        uint   `json:"id" gorm:"unique;primaryKey;autoIncrement"`
 	Username  string `gorm:"size:255;not null;unique"`
 	Password  string
 	FirstName string
@@ -21,6 +22,7 @@ type User struct {
 
 type Role struct {
 	gorm.Model
+	Id   uint `json:"id" gorm:"unique;primaryKey;autoIncrement"`
 	Name string
 }
 

@@ -7,7 +7,7 @@ import (
 )
 
 func ValidateRequest(ctx *gin.Context) {
-	fmt.Println("hi from middleware")
+	fmt.Println("hi from validation middleware")
 }
 
 func JwtAuthMiddleware() gin.HandlerFunc {

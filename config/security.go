@@ -18,27 +18,21 @@ func CheckPasswordHash(password, hash string) error {
 func LoginCheck(username string, password string) (string, error) {
 
 	var err error
-
 	u := model.User{}
-
-	err = model2.DB.Model(model.User{}).Preload("Role").Where("username = ?", username).Take(&u).Error
-
+	err = model2.Db.Model(model.User{}).Preload("Role").Where("username = ?", username).Take(&u).Error
 	if err != nil {
 		return "", err
 	}
 
 	err = CheckPasswordHash(password, u.Password)
-
 	if err != nil && err == bcrypt.ErrMismatchedHashAndPassword {
 		return "", err
 	}
 
 	token, err := GenerateJWT(u.Username, u.Role.Name)
-
 	if err != nil {
 		return "", err
 	}
 
 	return token, nil
-
 }

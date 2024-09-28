@@ -1,0 +1,119 @@
+definitions:
+  model.Authentication:
+    properties:
+      email:
+        type: string
+      firstname:
+        type: string
+      lastName:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  model.LoginDto:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+info:
+  contact: {}
+  description: This is a sample server Petstore server.
+  termsOfService: http://swagger.io/terms/
+  title: Swagger Example API
+  version: "1.0"
+paths:
+  /api/admin/say-hi:
+    get:
+      consumes:
+      - application/json
+      description: do ping
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      security: []
+      summary: ping example
+      tags:
+      - Admin
+  /api/product:
+    get:
+      consumes:
+      - application/json
+      description: do ping
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      security:
+      - JWT: []
+      summary: ping example
+      tags:
+      - example
+  /api/product/menu:
+    get:
+      consumes:
+      - application/json
+      description: do ping
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      security:
+      - JWT: []
+      summary: ping example
+      tags:
+      - example
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: do ping
+      parameters:
+      - description: Login data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/model.LoginDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: ping example
+      tags:
+      - UserManagement
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      description: do ping
+      parameters:
+      - description: User Data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/model.Authentication'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: ping example
+      tags:
+      - UserManagement
+swagger: "2.0"

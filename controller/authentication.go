@@ -8,6 +8,17 @@ import (
 	"net/http"
 )
 
+// Register
+// PingExample godoc
+// @Summary ping example
+// @Schemes
+// @Param  input body  model.Authentication true "User Data"
+// @Description do ping
+// @Tags UserManagement
+// @Accept json
+// @Produce json
+// @Success 200
+// @Router /auth/register [post]
 func Register(c *gin.Context) {
 	var input model.Authentication
 	if err := c.ShouldBindJSON(&input); err != nil {
@@ -15,11 +26,11 @@ func Register(c *gin.Context) {
 		return
 	}
 	var role model.Role
-	model2.DB.Model(model.Role{}).Where(model.Role{Name: "user"}).Take(&role)
+	model2.Db.Model(model.Role{}).Where(model.Role{Name: "user"}).Take(&role)
 	user := initialUser(input)
 	user.Role = role
 
-	result := model2.DB.Model(&model.User{}).Create(&user)
+	result := model2.Db.Model(&model.User{}).Create(&user)
 	err := result.Error
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -31,6 +42,17 @@ func Register(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"token": token})
 }
 
+// Login
+// PingExample godoc
+// @Summary ping example
+// @Schemes
+// @Param  input body  model.LoginDto true "Login data"
+// @Description do ping
+// @Tags UserManagement
+// @Accept json
+// @Produce json
+// @Success 200
+// @Router /auth/login [post]
 func Login(c *gin.Context) {
 
 	var input model.LoginDto
@@ -56,6 +78,17 @@ func Login(c *gin.Context) {
 
 }
 
+// AdminStaff
+// PingExample godoc
+// @Summary ping example
+// @Schemes
+// @Description do ping
+// @Tags Admin
+// @Accept json
+// @Security
+// @Produce json
+// @Success 200
+// @Router /api/admin/say-hi [get]
 func AdminStaff(c *gin.Context) {
 	c.JSON(200, "hiii adminssssss")
 }

@@ -4,6 +4,7 @@ import "gorm.io/gorm"
 
 type Transaction struct {
 	gorm.Model
+	Id          uint `json:"id" gorm:"unique;primaryKey;autoIncrement"`
 	Amount      uint
 	PaymentType PaymentType
 	Status      Status
@@ -15,6 +16,7 @@ type Transaction struct {
 
 type Wallet struct {
 	gorm.Model
+	Id           uint `json:"id" gorm:"unique;primaryKey;autoIncrement"`
 	Credit       float64
 	Transactions []Transaction
 }
