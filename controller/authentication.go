@@ -78,6 +78,23 @@ func Login(c *gin.Context) {
 
 }
 
+// GetV2UserByUsername
+// PingExample godoc
+// @Summary ping example
+// @Schemes
+// @Description do ping
+// @Tags UserManagement
+// @Accept json
+// @Produce json
+// @Success 200
+// @Router /api/admin/v2/user/{username} [get]
+func GetV2UserByUsername(c *gin.Context) {
+	var username = c.Param("username")
+	var user = model.User{}
+	model2.Db.Model(&model.User{}).Where(&model.User{Username: username}).First(&user)
+	c.JSON(http.StatusOK, user)
+}
+
 // AdminStaff
 // PingExample godoc
 // @Summary ping example

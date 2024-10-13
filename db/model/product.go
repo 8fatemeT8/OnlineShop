@@ -4,7 +4,6 @@ import "gorm.io/gorm"
 
 type Product struct {
 	gorm.Model
-	Id             uint `json:"id" gorm:"unique;primaryKey;autoIncrement"`
 	Name           string
 	Description    string
 	Price          float64
@@ -15,47 +14,41 @@ type Product struct {
 
 type ProductDetail struct {
 	gorm.Model
-	Id        uint `json:"id" gorm:"unique;primaryKey;autoIncrement"`
-	ColorId   uint
+	ColorID   uint
 	Color     Color
-	SizeId    uint
+	SizeID    uint
 	Size      Size
-	ProductId uint
+	ProductID uint
 	Product   Product
 	Count     uint
 }
 
 type Color struct {
 	gorm.Model
-	Id   uint `json:"id" gorm:"unique;primaryKey;autoIncrement"`
 	Name string
 }
 
 type Size struct {
 	gorm.Model
-	Id   uint `json:"id" gorm:"unique;primaryKey;autoIncrement"`
 	Name string
 }
 
 type Category struct {
 	gorm.Model
-	Id   uint `json:"id" gorm:"unique;primaryKey;autoIncrement"`
 	Name string
 }
 
 type Comment struct {
 	gorm.Model
-	Id        uint `json:"id" gorm:"unique;primaryKey;autoIncrement"`
-	ProductId uint
+	ProductID uint
 	Product   Product
-	UserId    uint
+	UserID    uint
 	User      User
 	Message   string
 }
 
 type Favorite struct {
 	gorm.Model
-	Id        uint `json:"id" gorm:"unique;primaryKey;autoIncrement"`
 	ProductId uint
 	UserId    uint
 }

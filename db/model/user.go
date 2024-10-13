@@ -9,21 +9,20 @@ import (
 
 type User struct {
 	gorm.Model
-	Id        uint   `json:"id" gorm:"unique;primaryKey;autoIncrement"`
 	Username  string `gorm:"size:255;not null;unique"`
 	Password  string
 	FirstName string
 	LastName  string
 	Email     string `gorm:"unique"`
-	RoleId    uint
+	RoleID    uint
 	Role      Role
 	Baskets   []Basket
 }
 
 type Role struct {
 	gorm.Model
-	Id   uint `json:"id" gorm:"unique;primaryKey;autoIncrement"`
 	Name string
+	User []User
 }
 
 type Authentication struct {

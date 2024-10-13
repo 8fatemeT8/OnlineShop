@@ -26,6 +26,7 @@ func SetRouters() {
 	protected.GET("/product/menu", controller.GetMenu)
 
 	adminRoute.GET("/say-hi", controller.AdminStaff)
+	adminRoute.GET("/v2/user/:username", controller.GetV2UserByUsername)
 
 	router.Run(":8090")
 }

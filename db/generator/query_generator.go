@@ -16,7 +16,7 @@ func main() {
 			Mode:    gen.WithoutContext | gen.WithDefaultQuery | gen.WithQueryInterface,
 		})
 
-	g.UseDB(model2.DB) // reuse your gorm db
+	g.UseDB(model2.Db) // reuse your gorm db
 
 	// Generate basic type-safe DAO API for struct `model.User` following conventions
 	g.ApplyBasic(model.User{})

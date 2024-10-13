@@ -4,19 +4,17 @@ import "gorm.io/gorm"
 
 type Transaction struct {
 	gorm.Model
-	Id          uint `json:"id" gorm:"unique;primaryKey;autoIncrement"`
 	Amount      uint
 	PaymentType PaymentType
 	Status      Status
 	Type        TransactionType
-	WalletId    *uint
+	WalletID    *uint
 	Wallet      *Wallet
 	BasketId    *uint
 }
 
 type Wallet struct {
 	gorm.Model
-	Id           uint `json:"id" gorm:"unique;primaryKey;autoIncrement"`
 	Credit       float64
 	Transactions []Transaction
 }
